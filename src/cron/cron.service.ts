@@ -22,7 +22,7 @@ export class CronService {
     }
   }
 
-  @Cron(CronExpression.EVERY_10_SECONDS, { name: 'mongodb-backup' })
+  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT, { name: 'mongodb-backup' })
   async cronHandle() {
     console.log(1);
 
