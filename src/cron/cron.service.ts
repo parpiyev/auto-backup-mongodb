@@ -49,7 +49,7 @@ export class CronService {
       if (error) {
         console.error(`Error: ${error.message}`);
       } else {
-        console.log('Mongodump completed successfully');
+        console.log('Mongodump completed successfully', this.baseBackupFolder);
       }
     });
   }
