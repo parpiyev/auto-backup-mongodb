@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import * as backup from 'mongodb-backup';
 import * as moment from 'moment';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -9,6 +8,7 @@ import { exec } from 'child_process';
 @Injectable()
 export class CronService {
   private readonly mongoUrl: string = process.env.MONGO_URL;
+  private readonly database: string = process.env.DATABASE;
   private readonly baseBackupFolder: string = path.join(__dirname, '../../');
 
   constructor() {
@@ -44,7 +44,7 @@ export class CronService {
     });
     // Options for the backup process
 
-    const command = `mongodump --uri "${this.mongoUrl}" --db buchet --out ${this.baseBackupFolder}`;
+    const command = `mongodump --uri "${this.mongoUrl}" --db ${this.database} --excludeCollection=notifications --excludeCollection=notificationtokens --excludeCollection=ordernotes --excludeCollection=orderstatuses --excludeCollection=productstatuses --excludeCollection=reports --excludeCollection=resultnotifications --excludeCollection=shoplogs --excludeCollection=appmetrics --excludeCollection=loggers --excludeCollection=productrecommends --out ${this.baseBackupFolder}`;
     exec(command, (error, stdout, stderr) => {
       if (error) {
         console.error(`Error: ${error.message}`);
