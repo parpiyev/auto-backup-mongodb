@@ -24,8 +24,6 @@ export class CronService {
 
   @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT, { name: 'mongodb-backup' })
   async cronHandle() {
-    console.log(1);
-
     // Generate the date-based folder structure
     const currentDate = moment();
     const year = currentDate.format('YYYY');
@@ -44,7 +42,7 @@ export class CronService {
     });
     // Options for the backup process
 
-    const command = `mongodump --uri "${this.mongoUrl}" --db ${this.database} --excludeCollection=recommendedproducts --excludeCollection=productviews --excludeCollection=appreportbygroups --excludeCollection=icps --excludeCollection=notifications --excludeCollection=notificationtokens --excludeCollection=ordernotes --excludeCollection=orderstatuses --excludeCollection=productstatuses --excludeCollection=reports --excludeCollection=resultnotifications --excludeCollection=shoplogs --excludeCollection=appmetrics --excludeCollection=loggers --excludeCollection=productrecommends --out ${this.baseBackupFolder}`;
+    const command = `mongodump --uri "${this.mongoUrl}" --db ${this.database} --excludeCollection=recommendedproducts --excludeCollection=productviews --excludeCollection=appreportbygroups --excludeCollection=icps --excludeCollection=notifications --excludeCollection=ordernotes --excludeCollection=orderstatuses --excludeCollection=productstatuses --excludeCollection=reports --excludeCollection=resultnotifications --excludeCollection=shoplogs --excludeCollection=appmetrics --excludeCollection=loggers --excludeCollection=productrecommends --out ${this.baseBackupFolder}`;
     exec(command, (error, stdout, stderr) => {
       if (error) {
         console.error(`Error: ${error.message}`);
